@@ -2,8 +2,11 @@
 
 # Do not use any of the built in array functions for this exercise
 class array:
-    def __init__(self):
+    def __init__(self, capacity):
         # Your code here
+        self.capacity = capacity
+        self.count = 0
+        self.elements = [None] * capacity
         pass
 
 
