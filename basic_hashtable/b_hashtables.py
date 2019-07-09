@@ -14,16 +14,22 @@ class Pair:
 # Fill this in.  All storage values should be initialized to None
 # '''
 class BasicHashTable:
-    def __init__(self, capacity):
-        pass
+    def __init__(self, capacity=None):
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
 # '''
 # Fill this in.
 # Research and implement the djb2 hash function
 # '''
+
+
 def hash(string, max):
-    pass
+    long_hash = 5381
+    for char in string:
+        long_hash = ((long_hash << 5) + long_hash) + ord(char)
+    return long_hash
 
 
 # '''
@@ -32,7 +38,23 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
+    storage = hash_table.storage
+    available_index = None
+    exists = False
+    for i in range(len(storage)):
+        if storage[i] == None:
+            available_index = i
+        elif storage[i][0] == key:
+            available_index = i
+            exists = True
+    if exists:
+        storage[i][1] = value
+        print(f'warning: you have overwritten {key}')
+    elif available_index == None:
+        storage[len(storage)] = (key, value)
+        print('warning: exceeds storage space')
+    else:
+        storage[available_index] = (key, value)
 
 
 # '''
@@ -41,7 +63,16 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+    storage = hash_table.storage
+    target_index = None
+    for i in range(len(storage)):
+        if storage[i] is not None:
+            if storage[i][0] == key:
+                target_index = i
+    if target_index is not None:
+        storage[target_index] = None
+    else:
+        print('warning: target does not exist')
 
 
 # '''
@@ -50,7 +81,16 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    storage = hash_table.storage
+    target_index = None
+    for i in range(len(storage)):
+        if storage[i] is not None:
+            if storage[i][0] == key:
+                target_index = i
+    if target_index is not None:
+        return storage[i][1]
+    else:
+        return None
 
 
 def Testing():
